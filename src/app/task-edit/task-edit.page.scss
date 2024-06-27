@@ -1,0 +1,16 @@
+ion-modal {
+    --height: auto;
+    align-items: end;
+}
+
+ion-picker {
+    --highlight-background: grey;
+    --highlight-border-radius: 50px;
+    --fade-background-rgb: var(--ion-color-light-rgb);
+    margin-bottom: var(--ion-safe-area-bottom);
+}
+
+.validation-errors {
+    color:red;
+    display: inline-block;
+}

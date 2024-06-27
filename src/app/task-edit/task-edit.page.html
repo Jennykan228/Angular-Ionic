@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>task-edit</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!taskForm.valid||!taskForm.touched" (click)="savetask()"> Save </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">task-edit</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <form [formGroup]="taskForm">
+  <!-- Name -->
+  <ion-item lines="full">
+    <ion-input label="Description" placeholder="Enter task description" formControlName="desc"></ion-input>
+  </ion-item>
+  <div *ngIf="taskForm.get('desc')?.invalid && (taskForm.get('desc')?.dirty || taskForm.get('desc')?.touched)" class="alert alert-danger">
+    <ion-icon class="validation-errors" name="alert-circle"></ion-icon>
+    <div class="validation-errors" *ngIf="taskForm.get('desc')?.errors?.['required']">
+      task description is required.
+    </div>
+  </div>
+  <!-- Status -->
+  <ion-item lines="full" id="open-status-modal">
+    <ion-label position="fixed">Status</ion-label>
+    <ion-text *ngIf="taskForm.get('status')?.value==''">--Choose Status--</ion-text>
+    <ion-text *ngIf="taskForm.get('status')?.value=='N'">Not Started</ion-text>
+    <ion-text *ngIf="taskForm.get('status')?.value=='IP'">In Progress</ion-text>
+    <ion-text *ngIf="taskForm.get('status')?.value=='CT'">Completed</ion-text>
+    <ion-text *ngIf="taskForm.get('status')?.value=='CL'">Closed</ion-text>
+    <!-- <ion-input  placeholder="Choose Status" disabled="true" [value]="taskForm.get('status')?.value"></ion-input> -->
+  </ion-item>
+  <div *ngIf="taskForm.get('status')?.invalid && (taskForm.get('status')?.dirty || taskForm.get('status')?.touched)" class="alert alert-danger">
+    <ion-icon class="validation-errors" name="alert-circle"></ion-icon>
+    <div class="validation-errors" *ngIf="taskForm.get('status')?.errors?.['required']">
+      task description is required.
+    </div>
+  </div>
+  </form>
+  <!-- modal -->
+  <ion-modal #modal trigger="open-status-modal" [isOpen]="false" (didDismiss)="onDidDismiss($event)">
+    <ng-template>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="modal.dismiss(null, 'cancel')">Cancel</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button (click)="modal.dismiss(currentStatusValue, 'confirm')">Add</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <ion-picker>
+        <ion-picker-column [value]="currentStatusValue" (ionChange)="onIonChange($event)">
+          <ion-picker-column-option value="" disabled="true">--</ion-picker-column-option>
+          <ion-picker-column-option value="N">Not Started</ion-picker-column-option>
+          <ion-picker-column-option value="IP">In Progress</ion-picker-column-option>
+          <ion-picker-column-option value="CT">Completed</ion-picker-column-option>
+          <ion-picker-column-option value="CL">Closed</ion-picker-column-option>
+        </ion-picker-column>
+      </ion-picker>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+

@@ -1,0 +1,79 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>profile-edit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">profile-edit</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content> -->
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>profile-edit</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!profileForm.valid||!profileForm.touched" (click)="updateProfile()"> Save </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">profile-edit</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <form [formGroup]="profileForm">
+  <!-- Name -->
+  <ion-item lines="full">
+    <ion-input label="Name" placeholder="Enter your name" formControlName="name"></ion-input>
+  </ion-item>
+  <div *ngIf="profileForm.get('name')?.invalid && (profileForm.get('name')?.dirty || profileForm.get('name')?.touched)" class="alert alert-danger">
+    <ion-icon class="validation-errors" name="alert-circle"></ion-icon>
+    <div class="validation-errors" *ngIf="profileForm.get('name')?.errors?.['required']">
+      Name is required.
+    </div>
+    <div class="validation-errors" *ngIf="profileForm.get('name')?.errors?.['minlength']">
+      Name must be at least 3 characters long.
+    </div>
+  </div>
+  <!-- Age -->
+  <ion-item lines="full">
+    <ion-input label="Age" placeholder="Enter your age" formControlName="age"></ion-input>
+  </ion-item>
+  <div *ngIf="profileForm.get('age')?.invalid && (profileForm.get('age')?.dirty || profileForm.get('age')?.touched)" class="alert alert-danger">
+    <ion-icon class="validation-errors" name="alert-circle"></ion-icon>
+    <div class="validation-errors" *ngIf="profileForm.get('age')?.errors?.['required']">
+      Age is required.
+    </div>
+    <div class="validation-errors" *ngIf="profileForm.get('age')?.errors?.['integerCheck']">
+      Age must be integer.
+    </div>
+  </div>
+  <!-- Sex -->
+  <ion-item lines="full">
+    <ion-input label="Sex" placeholder="Enter your sex" formControlName="sex"></ion-input>
+  </ion-item>
+  <div *ngIf="profileForm.get('sex')?.invalid && (profileForm.get('sex')?.dirty || profileForm.get('sex')?.touched)" class="alert alert-danger">
+    <ion-icon class="validation-errors" name="alert-circle"></ion-icon>
+    <div class="validation-errors" *ngIf="profileForm.get('sex')?.errors?.['required']">
+      Sex is required.
+    </div>
+    <div class="validation-errors" *ngIf="profileForm.get('sex')?.errors?.['maxlength']">
+      Sex must be at less than 3 characters long.
+    </div>
+  </div>
+  </form>
+</ion-content>
+
